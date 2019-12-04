@@ -30,7 +30,7 @@ while count < 10:
  #example_temp_reading = 70:10/24:04/12/2019 
 
  csvData = str(temperatureF)+ ","+str(now.minute)+","+str(now.hour)+","+str(now.day)+","+str(now.month)+","+str(now.year) 
- with open('temp_data.csv', 'w') as csvFile:
+ with open('temp_data.csv', 'w') as csv_File:
      writer = csv.writer(csvFile)
      writer.writerows(csvData)
    
