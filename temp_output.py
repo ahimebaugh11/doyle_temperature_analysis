@@ -1,26 +1,26 @@
-import board
-import analogio
-import time
+import RPi.GPIO as GPIO
+sensorPin = 14
+
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(sensorPin, GPIO.IN)
+
+count = 0
+while count < 10:
+ reading = GPIO.input(sensorPin)
+ print("Reading: " +str(reading))
+ 
+ #voltage = reading * 5.0
+ voltage = reading
+ 
+ print("Voltage: " +str(voltage))
+ 
+ temperatureC = (voltage - 0.5) * 100
  
  
-TMP36_PIN = board.A0  # Analog input connected to TMP36 output.
- 
- 
-# Function to simplify the math of reading the temperature.
-def tmp36_temperature_C(analogin):
-    millivolts = analogin.value * (analogin.reference_voltage * 1000 / 65535)
-    return (millivolts - 500) / 10
- 
- 
-# Create TMP36 analog input.
-tmp36 = analogio.AnalogIn(TMP36_PIN)
- 
-# Loop forever.
-while True:
-    # Read the temperature in Celsius.
-    temp_C = tmp36_temperature_C(tmp36)
-    # Convert to Fahrenheit.
-    temp_F = (temp_C * 9/5) + 32
-    # Print out the value and delay a second before looping again.
-    print("Temperature: {}C {}F".format(temp_C, temp_F))
-    time.sleep(1.0)
+ temperatureF = (temperatureC * 9.0 / 5.0) + 32.0
+ print("Temperature in Fahrenheit: "+str(temperatureF))
+ count+=1
+                                
+GPIO.cleanup()
